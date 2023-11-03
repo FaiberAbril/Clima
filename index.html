@@ -17,8 +17,8 @@
 
     <div class="container-fluid">
         <div class="row text-center">
-            <h1>Weather App Explora el Mapa</h2>
-            <p>En la parte central de la página, verás un mapa interactivo. Puedes explorar diferentes lugares en el mapa haciendo clic en cualquier punto. Cuando hagas clic en un lugar, la aplicación mostrará información meteorológica actualizada para esa ubicación.</p>     
+            <h1 class="display-1">Weather App Explora el Mapa</h2>
+            <p class="">En la parte central de la página, verás un mapa interactivo. Puedes explorar diferentes lugares en el mapa haciendo clic en cualquier punto. Cuando hagas clic en un lugar, la aplicación mostrará información meteorológica actualizada para esa ubicación.</p>     
         </div>
     </div>
     
@@ -27,16 +27,17 @@
         <div class=" col-sm-12 col-lg-8">
             <div id="map"></div>
         </div>
-        <div class="col-sm-12 col-lg-4">
+        <div class="col-sm-12 col-lg-4 mt-3">
             <div id="weather-info">
                 <div class="container">
                     <div class="card">
                         <div class="card-body">
-                            <h1 class="card-title" id="lugar" style=""></h1>
+                            <h1 class="card-title"  id="lugar"></h1>
                             <h1 class="card-subtitle mb-2 text-muted" id="temperature"></h1>
                             <h2 class="card-text" id="descripcion"></h2>
                             <h2 class="card-text" id="position"></h2>
                             <h2 class="card-text" id="wind-speed"></h2>
+                            <h2 class="card-text" id="humidity"></h2>
                     </div>
                     </div>
                 </div>
@@ -44,8 +45,6 @@
         </div>
     </div>
 </div>
-
-  
 
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
@@ -75,7 +74,7 @@
                     document.getElementById('lugar').textContent = `${cityName}`;
                     document.getElementById('temperature').textContent = `${temperature}°C`;
                     document.getElementById('position').textContent = `Latitud: ${lat}, Longitud: ${lon}`;
-                    document.getElementById('wind-speed').textContent = `${data.wind.speed} m/s`;
+                    document.getElementById('wind-speed').textContent = `Velocidad: ${data.wind.speed} m/s`;
                     document.getElementById('humidity').textContent = `${humidity}%`;
                     document.getElementById('descripcion').textContent = `${weatherDescription}`;                
                 });
