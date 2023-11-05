@@ -5,52 +5,88 @@
     <title>Weather App</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="estilos.css">
-    <style>
-        #map {
-            height: 400px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/estilos.css">
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Blog Home - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
 </head>
-
-<body  >
-
-    <div class="container-fluid">
-        <div class="row text-center">
-            <h1 class="display-1">Weather App Explora el Mapa</h2>
-            <p class="">En la parte central de la página, verás un mapa interactivo. Puedes explorar diferentes lugares en el mapa haciendo clic en cualquier punto. Cuando hagas clic en un lugar, la aplicación mostrará información meteorológica actualizada para esa ubicación.</p>     
+<body>
+      <!-- Responsive navbar-->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#!">Colegio Oficial Nuestra Señora Del Rosario</a>
         </div>
-    </div>
-    
-<div class="container-fluid">
-    <div class="row">
-        <div class=" col-sm-12 col-lg-8">
-            <div id="map"></div>
+    </nav>
+    <!-- Page header with logo and tagline-->
+    <header class="py-1 bg-light border-bottom mb-1">
+        <div class="container">
+            <div class="text-center my-2">
+                <h1 class="fw-bolder">Weather App Explora el Mapa</h1>
+                <p class="lead mb-0">Fabián Camilo García del grado 11. 1</p>
+            </div>
         </div>
-        <div class="col-sm-12 col-lg-4 mt-3">
-            <div id="weather-info">
-                <div class="container">
-                    <div class="card">
-                        <div class="card-body">
-                            <h1 class="card-title"  id="lugar"></h1>
-                            <h1 class="card-subtitle mb-2 text-muted" id="temperature"></h1>
-                            <h2 class="card-text" id="descripcion"></h2>
-                            <h2 class="card-text" id="position"></h2>
-                            <h2 class="card-text" id="wind-speed"></h2>
-                            <h2 class="card-text" id="humidity"></h2>
+    </header>
+    <!-- Page content-->
+    <div class="container">
+        <div class="row">
+            <!-- Blog entries-->
+            <div class="col-lg-8">
+                <!-- Featured blog post-->
+                <div class="card mb-4">
+                    <div id="map"></div>
+                    <div class="card-body">
+                    <p class="card-text">En la parte central de la página, verás un mapa interactivo. Puedes explorar diferentes lugares en el mapa haciendo clic en cualquier punto. Cuando hagas clic en un lugar, la aplicación mostrará información meteorológica actualizada para esa ubicación.</p>
                     </div>
+                </div>
+            </div>
+            <!-- Side widgets-->
+            <div class="col-lg-4">
+                <!-- Side widget-->
+                <div class="card mb-4">
+                    <div class="card-header">Clima</div>
+                    <div id="weather-info">
+                        <div class="container">
+                                <div class="card-body">
+                                    <h2 class="card-title"  id="lugar"></h2>
+                                    <h2 class="card-subtitle mb-2" id="temperature"></h2>
+                                    <h2 class="card-text" id="descripcion"></h2>
+                                    <p class="card-text" id="position"></p>
+                                    <p class="card-text" id="wind-speed"></p>
+                                    <p class="card-text" id="wind-direction"></p>                                    
+                                    <p class="card-text" id="humidity"></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+
+
+
+
+
 
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
         // Configuración inicial del mapa en Bucaramanga, Colombia
-        var initialCoordinates = [7.1173, -73.1276];
-        var initialZoom = 13;
+        var initialCoordinates = [6.69903, -72.73233];
+        var initialZoom = 12;
         var mymap = L.map('map').setView(initialCoordinates, initialZoom);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mymap);
 
@@ -65,19 +101,53 @@
             fetch(apiUrl)
                 .then(response => response.json())
                 .then(data => {
-                    var weatherDescription = data.weather[0].description;
+                    var weatherDescription = translateWeatherDescription(data.weather[0].description);
                     var temperature = data.main.temp;
                     var cityName = data.name;
                     var  humidity = data.main.humidity;
                     var pressure = data.main.pressure;
+                    var windDegree = data.wind.deg;
 
                     document.getElementById('lugar').textContent = `${cityName}`;
                     document.getElementById('temperature').textContent = `${temperature}°C`;
                     document.getElementById('position').textContent = `Latitud: ${lat}, Longitud: ${lon}`;
-                    document.getElementById('wind-speed').textContent = `Velocidad: ${data.wind.speed} m/s`;
+                    document.getElementById('wind-speed').textContent = ` velocidades del viento: ${data.wind.speed} m/s`;
                     document.getElementById('humidity').textContent = `${humidity}%`;
-                    document.getElementById('descripcion').textContent = `${weatherDescription}`;                
+                    document.getElementById('descripcion').textContent = `Clima:${weatherDescription}`;  
+                    
+                    var windDirection = getWindDirection(windDegree);
+                    document.getElementById('wind-direction').textContent = windDirection;
+                    
                 });
+        }
+
+function translateWeatherDescription(description) {
+    const weatherTranslations = {
+        "Clear": "Despejado",
+        "Clouds": "Nublado",
+        "Drizzle": "Llovizna",
+        "Rain": "Lluvia",
+        "Snow": "Nieve",
+        "overcast clouds":"Nublado",
+        "light rain":"lluvia ligera",
+        // Agrega más traducciones según sea necesario
+    };
+
+    // Verifica si existe una traducción para la descripción en inglés
+    if (weatherTranslations.hasOwnProperty(description)) {
+        return weatherTranslations[description];
+    }
+
+    // Si no se encuentra una traducción, simplemente devuelve la descripción original
+    return description;
+}
+
+
+function getWindDirection(degrees) {
+            var directions = ["Norte", "Noreste", "Este", "Sureste", "Sur", "Suroeste", "Oeste", "Noroeste"];
+            var index = Math.round((degrees % 360) / 45);
+            var direction = "Direccion del viento:" + directions[index];
+            return direction;
         }
 
         // Manejador de eventos al hacer clic en el mapa
